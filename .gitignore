@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.env
+
+# Trained model artifacts (generated at runtime)
+app/backend/models/*.pkl
+app/backend/models/*.joblib
+
+# OS
+.DS_Store
+
+# Credentials / lab runtime files (never commit)
+*.pem
+aws_iam_creds.json
+github_creds.json
+lab_env.txt
