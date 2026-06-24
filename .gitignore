@@ -12,6 +12,11 @@ app/backend/models/*.joblib
 # OS
 .DS_Store
 
+# Raw source bundles (not part of this assignment branch)
+Lab1_ProblemStatement_final.md
+Lab1_Setup_v2.zip
+Lab1_TestCase_final.zip
+
 # Credentials / lab runtime files (never commit)
 *.pem
 aws_iam_creds.json

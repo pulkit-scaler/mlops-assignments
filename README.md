@@ -1,5 +1,7 @@
 # MLOps CI/CD Pipeline Lab
 
+**Assignment ID:** `301468`
+
 A hands-on lab where learners build a complete **CI/CD pipeline with GitHub Actions** for a
 production-style **MLOps Model Serving Platform** — building Docker images, pushing them to
 Amazon ECR, and deploying a multi-service ML stack to an EC2 instance over SSH.
@@ -45,3 +47,8 @@ curl http://localhost:8000/health      # ML API health
 # Dashboard: http://localhost:8501
 docker compose down
 ```
+
+---
+
+> Part of the [MLOps Assignments](https://github.com/pulkit-scaler/mlops-assignments) repo.
+> The index of all assignments lives on the [`main`](https://github.com/pulkit-scaler/mlops-assignments/tree/main) branch.
