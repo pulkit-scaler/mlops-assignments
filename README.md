@@ -1,47 +1,28 @@
-# MLOps CI/CD Pipeline Lab
+# MLOps Assignments
 
-A hands-on lab where learners build a complete **CI/CD pipeline with GitHub Actions** for a
-production-style **MLOps Model Serving Platform** — building Docker images, pushing them to
-Amazon ECR, and deploying a multi-service ML stack to an EC2 instance over SSH.
+Index of hands-on MLOps lab assignments. **Each assignment lives on its own branch** —
+this `main` branch only holds this index. Click a branch link below to open the full
+assignment (problem statement, setup, and grading scripts).
 
-The application under test is a multi-service stack:
+## Assignments
 
-- **FastAPI ML API** — serves predictions from a trained scikit-learn Iris classifier with Redis caching
-- **Streamlit Dashboard** — interactive prediction UI and model monitoring
-- **Redis** — prediction result cache layer
+| # | Assignment | ID | Branch |
+|---|------------|----|--------|
+| 1 | **MLOps CI/CD Pipeline** — build a GitHub Actions CI/CD pipeline (build → push → deploy) for an ML model serving stack on ECR + EC2 | `301468` | [`mlops-ci-cd`](https://github.com/pulkit-scaler/mlops-assignments/tree/mlops-ci-cd) |
+| 2 | **S3 & SageMaker Data Wrangler** — prepare the Iris dataset in Data Wrangler and export the processed CSV to S3 | `301607` | [`s3-data-wrangler`](https://github.com/pulkit-scaler/mlops-assignments/tree/s3-data-wrangler) |
 
-## Repository Layout
+## How this repo is organized
 
-| Path | What it contains |
-|---|---|
-| [`problem-statement.md`](problem-statement.md) | The full lab question handed to learners |
-| [`INSTRUCTOR-SETUP-GUIDE.md`](INSTRUCTOR-SETUP-GUIDE.md) | Platform configuration, timing, scoring, and grading notes |
-| [`app/`](app/) | The MLOps Model Serving Platform source (backend, frontend, compose files) |
-| [`setup/scripts/`](setup/scripts/) | Environment provisioning script (ECR repos, EC2, credentials, code) |
-| [`test-cases/scripts/`](test-cases/scripts/) | 10 auto-grading scripts (5 pts each, 50 total) |
-| [`reference-solution/`](reference-solution/) | Reference `deploy-pipeline.yml` GitHub Actions workflow |
+- **`main`** — this index only.
+- **One branch per assignment** — named after the assignment, containing:
+  - `problem-statement.md` — the lab question handed to learners
+  - `setup/scripts/` — environment provisioning script(s)
+  - `test-cases/scripts/` — auto-grading scripts
 
-## Lab Overview
-
-- **Max score:** 50 (10 test cases × 5 pts)
-- **Time limit:** 40 minutes (75 minute duration)
-- **Cloud:** AWS `us-west-2` (ECR + EC2 t2.micro)
-
-Learners produce a GitHub Actions workflow with three sequential jobs:
-
-```
-build  →  push  →  deploy
-```
-
-See [`problem-statement.md`](problem-statement.md) for the full task breakdown and
-[`INSTRUCTOR-SETUP-GUIDE.md`](INSTRUCTOR-SETUP-GUIDE.md) for the grading rubric.
-
-## Running the App Locally
+## Opening an assignment
 
 ```bash
-cd app
-docker compose up -d --build
-curl http://localhost:8000/health      # ML API health
-# Dashboard: http://localhost:8501
-docker compose down
+git clone git@github.com:pulkit-scaler/mlops-assignments.git
+cd mlops-assignments
+git switch mlops-ci-cd        # or: s3-data-wrangler
 ```

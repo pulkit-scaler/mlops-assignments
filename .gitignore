@@ -1,19 +1,7 @@
-# Python
-__pycache__/
-*.pyc
-*.egg-info/
-.venv/
-.env
+# Raw source bundles for assignments (live on their own branches, not on main)
+Lab1_ProblemStatement_final.md
+Lab1_Setup_v2.zip
+Lab1_TestCase_final.zip
 
-# Trained model artifacts (generated at runtime)
-app/backend/models/*.pkl
-app/backend/models/*.joblib
-
-# OS
+# OS / editor cruft
 .DS_Store
-
-# Credentials / lab runtime files (never commit)
-*.pem
-aws_iam_creds.json
-github_creds.json
-lab_env.txt
