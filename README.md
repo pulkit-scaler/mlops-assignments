@@ -10,6 +10,7 @@ assignment (problem statement, setup, and grading scripts).
 |---|------------|----|--------|
 | 1 | **MLOps CI/CD Pipeline** — build a GitHub Actions CI/CD pipeline (build → push → deploy) for an ML model serving stack on ECR + EC2 | `301468` | [`mlops-ci-cd`](https://github.com/pulkit-scaler/mlops-assignments/tree/mlops-ci-cd) |
 | 2 | **S3 & SageMaker Data Wrangler** — prepare the Iris dataset in Data Wrangler and export the processed CSV to S3 | `301607` | [`s3-data-wrangler`](https://github.com/pulkit-scaler/mlops-assignments/tree/s3-data-wrangler) |
+| 3 | **SageMaker Feature Store** — create a feature group and ingest/retrieve Iris records via boto3 (online + offline store) | `301712` | [`feature-store`](https://github.com/pulkit-scaler/mlops-assignments/tree/feature-store) |
 
 ## How this repo is organized
 
@@ -24,5 +25,5 @@ assignment (problem statement, setup, and grading scripts).
 ```bash
 git clone git@github.com:pulkit-scaler/mlops-assignments.git
 cd mlops-assignments
-git switch mlops-ci-cd        # or: s3-data-wrangler
+git switch mlops-ci-cd        # or: s3-data-wrangler, feature-store
 ```
