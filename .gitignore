@@ -1,0 +1,17 @@
+# Raw source bundles / authoring folders (not part of this assignment branch)
+new-problem/
+Lab1_ProblemStatement_final.md
+Lab1_Setup_v2.zip
+Lab1_TestCase_final.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Credentials / lab runtime files (never commit)
+aws_iam_creds.json
+lab_env.txt
+retrieved_records.json
+
+# OS / editor cruft
+.DS_Store
