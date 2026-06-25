@@ -1,29 +1,47 @@
-# MLOps Assignments
+# SageMaker Model Registry & Canvas — Lab
 
-Index of hands-on MLOps lab assignments. **Each assignment lives on its own branch** —
-this `main` branch only holds this index. Click a branch link below to open the full
-assignment (problem statement, setup, and grading scripts).
+**Assignment ID:** `301766`
 
-## Assignments
+A hands-on lab where learners work with the **Amazon SageMaker Model Registry**, the central
+hub for cataloging trained models, tracking versions, and governing them through a formal
+approval workflow — combined with **SageMaker Canvas** for no-code model training.
 
-| # | Assignment | ID | Branch |
-|---|------------|----|--------|
-| 1 | **MLOps CI/CD Pipeline** — build a GitHub Actions CI/CD pipeline (build → push → deploy) for an ML model serving stack on ECR + EC2 | `301468` | [`mlops-ci-cd`](https://github.com/pulkit-scaler/mlops-assignments/tree/mlops-ci-cd) |
-| 2 | **S3 & SageMaker Data Wrangler** — prepare the Iris dataset in Data Wrangler and export the processed CSV to S3 | `301607` | [`s3-data-wrangler`](https://github.com/pulkit-scaler/mlops-assignments/tree/s3-data-wrangler) |
-| 3 | **SageMaker Feature Store** — create a feature group and ingest/retrieve Iris records via boto3 (online + offline store) | `301712` | [`feature-store`](https://github.com/pulkit-scaler/mlops-assignments/tree/feature-store) |
+Learners:
 
-## How this repo is organized
+1. Provision a **SageMaker Studio domain** (via a helper script) and train an Iris classifier
+   in **Canvas** with no code
+2. Create a **Model Package Group** to organize model versions via the AWS CLI
+3. **Share** the Canvas-trained model into the registry directly from the Canvas UI
+4. Register a second model version programmatically with **boto3**, specifying the inference
+   container and model artifact
+5. Manage the **approval workflow** — transition the boto3 version from
+   `PendingManualApproval` to `Approved`
+6. Save structured registration details to `registration_details.json` for audit
 
-- **`main`** — this index only.
-- **One branch per assignment** — named after the assignment, containing:
-  - `problem-statement.md` — the lab question handed to learners
-  - `setup/scripts/` — environment provisioning script(s)
-  - `test-cases/scripts/` — auto-grading scripts
+This simulates a real-world MLOps governance scenario: models arrive in a central registry from
+multiple sources — no-code tools like Canvas and programmatic pipelines — and are governed
+through a single approval process.
 
-## Opening an assignment
+## Repository Layout
 
-```bash
-git clone git@github.com:pulkit-scaler/mlops-assignments.git
-cd mlops-assignments
-git switch mlops-ci-cd        # or: s3-data-wrangler, feature-store
-```
+| Path | What it contains |
+|---|---|
+| [`problem-statement.md`](problem-statement.md) | The full lab question handed to learners |
+| [`INSTRUCTOR-SETUP-GUIDE.md`](INSTRUCTOR-SETUP-GUIDE.md) | Platform configuration, timing, scoring, and grading notes |
+| [`setup/scripts/`](setup/scripts/) | Environment provisioning script (S3 model artifact + dataset, IAM role, Studio helper, credentials) |
+| [`test-cases/scripts/`](test-cases/scripts/) | 10 auto-grading scripts |
+| [`reference-solution/`](reference-solution/) | Reference `register_model.py` and a `solution.md` walkthrough |
+
+## Lab Overview
+
+- **Cloud:** AWS `us-west-2` (SageMaker Studio + Canvas + Model Registry + S3)
+- Learners produce an `iris-model-group` Model Package Group containing **two versions** (one
+  from Canvas, one from boto3 — `Approved`) and a `registration_details.json` capturing both
+  model package ARNs and the approval status.
+
+See [`problem-statement.md`](problem-statement.md) for the full task breakdown.
+
+---
+
+> Part of the [MLOps Assignments](https://github.com/pulkit-scaler/mlops-assignments) repo.
+> The index of all assignments lives on the [`main`](https://github.com/pulkit-scaler/mlops-assignments/tree/main) branch.
