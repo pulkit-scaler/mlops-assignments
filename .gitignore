@@ -1,5 +1,6 @@
 # Raw source bundles / authoring folders for assignments (live on their own branches, not on main)
 new-problem/
+INSTRUCTIONS.md
 Lab1_ProblemStatement_final.md
 Lab1_Setup_v2.zip
 Lab1_TestCase_final.zip
