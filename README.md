@@ -1,30 +1,42 @@
-# MLOps Assignments
+# MLflow + DVC Experiment Tracking Lab
 
-Index of hands-on MLOps lab assignments. **Each assignment lives on its own branch** —
-this `main` branch only holds this index. Click a branch link below to open the full
-assignment (problem statement, setup, and grading scripts).
+**Assignment ID:** `302025`
 
-## Assignments
+A hands-on lab where learners build a reproducible, versioned ML workflow for a wine
+quality producer using **DVC** for data versioning, **MLflow** for experiment tracking,
+and **GitHub Actions** to run the training pipeline automatically on every push.
 
-| # | Assignment | ID | Branch |
-|---|------------|----|--------|
-| 1 | **MLOps CI/CD Pipeline** — build a GitHub Actions CI/CD pipeline (build → push → deploy) for an ML model serving stack on ECR + EC2 | `301468` | [`mlops-ci-cd`](https://github.com/pulkit-scaler/mlops-assignments/tree/mlops-ci-cd) |
-| 2 | **S3 & SageMaker Data Wrangler** — prepare the Iris dataset in Data Wrangler and export the processed CSV to S3 | `301607` | [`s3-data-wrangler`](https://github.com/pulkit-scaler/mlops-assignments/tree/s3-data-wrangler) |
-| 3 | **SageMaker Feature Store** — create a feature group and ingest/retrieve Iris records via boto3 (online + offline store) | `301712` | [`feature-store`](https://github.com/pulkit-scaler/mlops-assignments/tree/feature-store) |
-| 4 | **SageMaker Model Registry & Canvas** — train an Iris model in Canvas and share it to the registry, register a second version via boto3, and drive the approval workflow | `301766` | [`model-registry-canvas`](https://github.com/pulkit-scaler/mlops-assignments/tree/model-registry-canvas) |
+Learners:
 
-## How this repo is organized
+1. Version the wine dataset with **DVC** and push it to an **S3** remote
+2. Complete a `train.py` that logs params, metrics, and artifacts to **MLflow**
+3. Run a sweep of experiments and complete a `query_runs.py` that ranks runs by accuracy
+4. Wire up a **GitHub Actions** workflow that pulls the DVC data and runs the pipeline on push
 
-- **`main`** — this index only.
-- **One branch per assignment** — named after the assignment, containing:
-  - `problem-statement.md` — the lab question handed to learners
-  - `setup/scripts/` — environment provisioning script(s)
-  - `test-cases/scripts/` — auto-grading scripts
+This simulates a real-world MLOps workflow: data is versioned and reproducible across
+environments, every training run is tracked and comparable, and the whole pipeline runs
+automatically in CI.
 
-## Opening an assignment
+## Repository Layout
 
-```bash
-git clone git@github.com:pulkit-scaler/mlops-assignments.git
-cd mlops-assignments
-git switch mlops-ci-cd        # or: s3-data-wrangler, feature-store, model-registry-canvas
-```
+| Path | What it contains |
+|---|---|
+| [`problem-statement.md`](problem-statement.md) | The full lab question handed to learners |
+| [`INSTRUCTOR-SETUP-GUIDE.md`](INSTRUCTOR-SETUP-GUIDE.md) | Platform configuration, timing, scoring, and grading notes |
+| [`setup/scripts/`](setup/scripts/) | Environment provisioning script (packages, S3 DVC remote, scaffold, credentials) |
+| [`test-cases/scripts/`](test-cases/scripts/) | 10 auto-grading scripts |
+| [`reference-solution/`](reference-solution/) | Reference `train.py`, `query_runs.py`, and `train-pipeline.yml` |
+
+## Lab Overview
+
+- **Cloud:** AWS `us-west-2` (S3 as the DVC remote)
+- **Stack:** Python 3, MLflow, scikit-learn, DVC + dvc-s3, GitHub Actions
+- Learners produce a DVC-tracked dataset on S3, MLflow runs comparing model configs,
+  a working `query_runs.py`, and a green GitHub Actions training pipeline.
+
+See [`problem-statement.md`](problem-statement.md) for the full task breakdown.
+
+---
+
+> Part of the [MLOps Assignments](https://github.com/pulkit-scaler/mlops-assignments) repo.
+> The index of all assignments lives on the [`main`](https://github.com/pulkit-scaler/mlops-assignments/tree/main) branch.

@@ -1,9 +1,28 @@
-# Raw source bundles / authoring folders for assignments (live on their own branches, not on main)
+# Raw source bundles / authoring folders (not part of this assignment branch)
 new-problem/
-INSTRUCTIONS.md
 Lab1_ProblemStatement_final.md
 Lab1_Setup_v2.zip
 Lab1_TestCase_final.zip
+files.zip
+Setup.zip
+TestCase.zip
+scratch_unzip/
+INSTRUCTIONS.md
+# Flat authoring copies — the canonical versions live in reference-solution/
+SOLUTION_train.py
+SOLUTION_query_runs.py
+SOLUTION_train-pipeline.yml
+SOLUTION_walkthrough.md
+
+# Python
+__pycache__/
+*.pyc
+
+# Credentials / lab runtime files (never commit)
+aws_iam_creds.json
+lab_env.txt
+retrieved_records.json
+github_creds.json
 
 # OS / editor cruft
 .DS_Store
