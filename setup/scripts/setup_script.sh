@@ -26,11 +26,10 @@ wait $PID2 2>/dev/null || echo "  mlops-dashboard already exists"
 echo "  ✓ ECR: mlops-api, mlops-dashboard"
 
 # ==========================================
-# 2. Save AWS Credentials (reuse container's own creds — no IAM user needed)
+# 2. Save AWS Credentials (reuse container's own creds)
 # ==========================================
 echo "[2/5] Saving AWS credentials..."
 
-# Extract from environment or AWS CLI config
 if [ -n "${AWS_ACCESS_KEY_ID:-}" ]; then
     CRED_KEY="$AWS_ACCESS_KEY_ID"
     CRED_SECRET="$AWS_SECRET_ACCESS_KEY"
@@ -46,7 +45,6 @@ if [ -z "$CRED_KEY" ] || [ -z "$CRED_SECRET" ]; then
     exit 1
 fi
 
-# Build JSON — include session token only if present
 if [ -n "$CRED_TOKEN" ]; then
     cat > /home/user/aws_iam_creds.json <<CREDS
 {
@@ -101,9 +99,9 @@ fi
 echo "  ✓ Key pair: $KEY_NAME | SG: $SG_ID"
 
 # ==========================================
-# 4. Launch EC2 t2.micro (policy denies all other types)
+# 4. Launch EC2 t2.micro (user-data handles all config)
 # ==========================================
-echo "[4/5] Launching EC2 instance (t2.micro)..."
+echo "[4/5] Launching EC2 instance..."
 
 AMI_ID=$(aws ec2 describe-images --owners 099720109477 \
     --filters "Name=name,Values=ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*" \
@@ -111,7 +109,6 @@ AMI_ID=$(aws ec2 describe-images --owners 099720109477 \
     --region "$REGION" \
     --query 'Images | sort_by(@, &CreationDate) | [-1].ImageId' --output text)
 
-# Build AWS credentials block for user-data
 if [ -n "$CRED_TOKEN" ]; then
     AWS_CREDS_BLOCK="[default]
 aws_access_key_id = ${CRED_KEY}
@@ -206,7 +203,7 @@ fi
 EC2_PUBLIC_IP=$(aws ec2 describe-instances --instance-ids "$INSTANCE_ID" \
     --region "$REGION" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
-echo "  ✓ EC2: $EC2_PUBLIC_IP (t2.micro + swap — Docker installing ~3-5 min)"
+echo "  ✓ EC2: $EC2_PUBLIC_IP (Docker installing in background ~3-5 min)"
 
 # ==========================================
 # 5. Create Application Code + Save Env
@@ -523,6 +520,11 @@ curl http://localhost:8000/health
 ```
 EOF
 
+# ==========================================
+# Add user to docker group so they can run docker without sudo
+# ==========================================
+usermod -aG docker user 2>/dev/null || true
+
 # Save environment info
 cat > /home/user/lab_env.txt <<ENV
 REGION=${REGION}
@@ -545,9 +547,10 @@ echo "================================================"
 echo ""
 echo "  ✓ ECR repos:    mlops-api, mlops-dashboard"
 echo "  ✓ AWS creds:    /home/user/aws_iam_creds.json"
-echo "  ✓ EC2 instance: $EC2_PUBLIC_IP (t2.micro + swap — Docker ~3-5 min)"
+echo "  ✓ EC2 instance: $EC2_PUBLIC_IP (Docker installing ~3-5 min)"
 echo "  ✓ SSH key:      /home/user/private.pem"
 echo "  ✓ App code:     ${BASE_DIR}"
+echo "  ✓ Docker group: user added (no sudo needed)"
 echo ""
 echo "  GitHub Secrets:"
 echo "    AWS_ACCESS_KEY_ID     = $CRED_KEY"
@@ -559,8 +562,6 @@ echo "    EC2_USER              = ubuntu"
 echo "    EC2_SSH_KEY           = (see /home/user/private.pem)"
 if [ -n "$CRED_TOKEN" ]; then
 echo "    AWS_SESSION_TOKEN     = (see /home/user/aws_iam_creds.json)"
-echo ""
-echo "  ⚠ Session token detected — add AWS_SESSION_TOKEN as a GitHub secret too"
 fi
 echo ""
 echo "================================================"
